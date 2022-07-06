@@ -1,6 +1,7 @@
+// Business Layer - service layer is responsible for business logic (part of controller MVC but separated buissnes logic)
 package com.example.demo.student;
 
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -10,15 +11,14 @@ import java.util.List;
 @Service
 public class StudentService {
 
+    private final StudentRepository studentRepository;
+
+    @Autowired
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
+
     public List<Student> geStudents() {
-        return List.of(
-                new Student(
-                        1L,
-                        "Jan",
-                        "jan@asd.com",
-                        LocalDate.of(1234, Month.APRIL,12),
-                        45
-                )
-        );
+        return studentRepository.findAll();
     }
 }
